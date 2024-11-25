@@ -10,3 +10,11 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+
+p span {
+    display: none;
+}
+
+p:hover span {
+    display: inline;
+}
