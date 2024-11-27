@@ -10,8 +10,28 @@ const Home = () => {
 	const [newTodo, setNewTodo] = useState("");
 	const [todoList, setTodoList] = useState([]);
 
+	const createUser = () => {
+		return fetch("https://playground.4geeks.com/todo/users/alex5perez", {
+			method: "POST",
+			body: JSON.stringify([]),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+	};
+
 	useEffect(() => {
 		fetch("https://playground.4geeks.com/todo/users/alex5perez")
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				} else if (response.status === 404) {
+					return createUser();
+				}
+			})
+			.then(() => {
+				return fetch("https://playground.4geeks.com/todo/users/alex5perez");
+			})
 			.then((response) => response.json())
 			.then((data) => {
 				setTodoList(data.todos);
